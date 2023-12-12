@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="styleSheet" href="main.css">
+    <link rel="styleSheet" href="header.css">
+    <script src="main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&family=Tektur:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/favicon.ico">
+    <title>Расписание занятий</title>
+  </head>
+  <body>
+    <div id="main_body">
+      <div id = "top_body_edit_on" class = "top_body_edit"><img class = "top_body_edit_pic" onclick="showOverlay(`login_overlay`)" src="img/edit.png"></div>
+      <div id = "top_body_edit_off" style="display: none;" class = "top_body_edit"><img class = "top_body_edit_pic" onclick="editModeOff()" src="img/eye.png"></div>      
+      
+      <div class="overlay" id = "groupOverlay" > 
+        <button class = "close_button" onclick="closeOverlay(`groupOverlay`)">&#10006;</button>
+        <div class = "overlayWindow">
+          <div id = "sortChoice" class = "overlay_choice">
+            <button id="group_button"   onclick="getInfo(false, `groups`);"   style="font-size: 30px;"> Группа </button>
+            <button id="teacher_button" onclick="getInfo(false, `teachers`);" style="font-size: 30px;"> Преподаватель </button>
+            <button id="room_button"    onclick="getInfo(false, `rooms`);"    style="font-size: 30px;"> Аудитория </button>
+          </div>
+          <input id ="filter_search_bar" class="search_bar" onkeyup="searchList(this.id)" type="text" name="search" placeholder="№ Группы">
+          <ul id = "filterList" class = "list">
+          </ul>
+        </div>
+      </div>
+
+      <div class = "overlay" id="edit_overlay">
+        <button class = "close_button" onclick="closeOverlay(`edit_overlay`)">&#10006;</button>
+
+        <div class = "overlayWindow">
+          
+          <div id = "edit_choice" class = "overlay_choice">
+            <button id="group_edit_button"   onclick="getInfo(true, `groups`);"   style="font-size: 30px;"> Группа        </button>
+            <button id="teacher_edit_button" onclick="getInfo(true, `teachers`);" style="font-size: 30px;"> Преподаватель </button>
+            <button id="room_edit_button"    onclick="getInfo(true, `rooms`);"    style="font-size: 30px;"> Аудитория     </button>
+            <button id="class_edit_button"   onclick="getInfo(true, `classes`);" style="font-size: 30px;"> Дисциплины    </button>
+          </div>
+
+          <div class = "overlay_control">
+            <input id ="edit_search_bar" class="search_bar" onkeyup="searchTable()" type="text" name="search" placeholder="№ Группы">
+            <button class="add_button" onclick="addNewElement()"><a>+</a></button>
+          </div>
+          <div class="error_message"> </div>
+
+          <div id = "edit_list" class = "list">
+          </div>
+
+        </div>
+      </div>
+
+      <div class = "overlay" id ="edit_row_overlay"> 
+        <button class = "close_button" onclick="closeOverlay(`edit_row_overlay`)">&#10006;</button>
+        <div class="overlayWindow" id = "element_edit_window">
+          <div><p id = "element_edit_header">header</p></div>
+          <table id = "element_edit_table" class = "edit_table">
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>
+                <select>
+                  <option value="Пр">Практика</option>
+                  <option value="Лек">Лекция</option>
+                </select>
+              </td>
+              <td>
+                <select>
+                  <option value="Пр">Вычислительные системы, сети и телекоммуникации</option>
+                  <option value="Лек">Базы данных</option>
+                </select>
+              </td>
+              <td>
+                <select>
+                  <option value="Пр">Федин А. К.</option>
+                  <option value="Лек">Иванов А. А.</option>
+                  <option value="Пр">Корниенко И. Г.</option>
+                </select>
+              </td>
+              <td>                
+                <select>
+                <option value="Пр">8 ауд.</option>
+                <option value="Лек">12 ауд.</option>
+                </select>
+            </td>
+              <td>
+                <select>
+                  <option value="Пр">7-я Красноармейская ул., 6-8</option>
+                  <option value="Лек">Загородный просп., 49</option>
+                </select>
+              </td>
+              <td>
+
+              </td>
+            </tr>
+            <!-- Add more rows as needed -->
+          </table>
+        </div>
+      </div>
+
+      <div class = "overlay" id = "login_overlay"> 
+        <button class = "close_button" onclick="closeOverlay(`login_overlay`)">&#10006;</button>
+        <div class="overlayWindow">
+          <p id="login_error">Ошибка! Неправильный логин или пароль.</p>
+          <div class="login-form">
+            <h1>Авторизация</h1>
+            <form class="login_form">
+              <input type="text" name="username" id ="username" placeholder="Логин" required>
+              <input type="password" name="password" id="password" placeholder="Пароль" required>
+              <input type="button" value="Войти" onclick="login()">
+            </form>
+          </div>
+          </table>
+        </div>
+      </div>
+
+      <div id = "top_body">
+        <div class="top_body_pic">
+          <a href="https://technolog.edu.ru/" title="Санкт-Петербургский государственный технологический институт" class="">
+            <img class = "uni_logo" src="img/21.png">
+          </a>
+        </div>
+        <p id="top_body_text"> Расписание занятий</p>
+        <div class="top_body_time">
+          <div id = "time_block">
+            <p id="date"></p>
+            <div id="week_block">
+              <button class="stylyized_button week_swap_button" onclick="swapWeek(-1);">&lt;</button>
+              <p id="week_num"></p>
+              <button class="stylyized_button week_swap_button" onclick="swapWeek(1);">&gt;</button>
+            </div>
+          </div>
+          <div id="button_func">
+            <button class="edit_button stylyized_button" id="teacher_edit"  onclick="showOverlay(`edit_overlay`); getInfo(true, `groups`);">Редактировать</button>
+            <!-- 
+            <button class="edit_button stylyized_button" id="group_edit"    onclick="showOverlay(`group_edit_overlay`); getInfo(true, `groups`);">Группы</button>
+            <button class="edit_button stylyized_button" id="room_edit"     onclick="showOverlay(`room_edit_overlay`); getInfo(true, `rooms`);">Аудитории</button>
+            <button class="edit_button stylyized_button" id="class_edit"    onclick="showOverlay(`class_edit_overlay`); getInfo(true, `teachers`);">Дисциплины</button>
+            -->
+            <button id="choice_button" class="edit_button stylyized_button" style="display: inline;" onclick="showOverlay(`groupOverlay`); getInfo(false, `groups`);"> Фильтр </button>
+          </div>
+          <script>
+            getDate();
+            
+            //getInfo("timeTable");
+          </script>
+        </div>
+      </div>
+
+
+      <div id="mid_body">
+        <div id = "monday" class = "week_day">
+          <p class = "week_day_name">NaN </p>
+          <div class = "classes" id = "monday_classes">
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">9:30</p>
+                <p class="class_end">11:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"></p> 
+                <p class = "class_name"></p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">11:30</p>
+                <p class="class_end">13:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type">  </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">14:00</p>
+                <p class="class_end">15:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">16:00</p>
+                <p class="class_end">17:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">18:00</p>
+                <p class="class_end">19:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name"> </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id = "tuesday" class = "week_day">
+          <p class = "week_day_name">Вторник, </p>
+          <div class = "classes" id = "tuesday_classes">
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">9:30</p>
+                <p class="class_end">11:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">11:30</p>
+                <p class="class_end">13:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name"> </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">14:00</p>
+                <p class="class_end">15:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">16:00</p>
+                <p class="class_end">17:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">18:00</p>
+                <p class="class_end">19:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id = "wednesday" class = "week_day">
+          <p class = "week_day_name">Понедельник, </p>
+          <div class = "classes" id = "wednesday_classes">
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">9:30</p>
+                <p class="class_end">11:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">11:30</p>
+                <p class="class_end">13:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">14:00</p>
+                <p class="class_end">15:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name"> </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">16:00</p>
+                <p class="class_end">17:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name"> </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">18:00</p>
+                <p class="class_end">19:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name"> </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id = "thursday" class = "week_day">
+          <p class = "week_day_name">Понедельник, </p>
+          <div class = "classes" id = "thursday_classes">
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">9:30</p>
+                <p class="class_end">11:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name"> </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">11:30</p>
+                <p class="class_end">13:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name"> </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">14:00</p>
+                <p class="class_end">15:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">16:00</p>
+                <p class="class_end">17:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">18:00</p>
+                <p class="class_end">19:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id = "friday" class = "week_day">
+          <p class = "week_day_name">Понедельник, </p>
+          <div class = "classes" id = "friday_classes">
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">9:30</p>
+                <p class="class_end">11:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+            
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">11:30</p>
+                <p class="class_end">13:10</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">14:00</p>
+                <p class="class_end">15:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">16:00</p>
+                <p class="class_end">17:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+            <div class = "inner_class">
+              <div class = "class_time">
+                <p class="class_start">18:00</p>
+                <p class="class_end">19:40</p>
+              </div>
+              <div class = "class_name_type">
+                <p class = "class_type"> </p> 
+                <p class = "class_name">  </p>
+              </div>
+              <div class = "class_info">
+                <p class = teacher></p>
+                <p class = "location"></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <script>setWeek(); determineCurrentTime();</script>
+
+      </div>
+
+    </div>
+  </body>
+</html>

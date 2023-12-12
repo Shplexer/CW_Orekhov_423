@@ -1,0 +1,419 @@
+p{
+  font-family: "Jost","Arial",sans-serif;
+  color: rgb(255, 255, 255);
+  text-shadow: 0px 0px 5px #000000;
+}
+
+body{
+  background-color: rgb(183, 162, 132);
+  padding-left: 85px;
+  padding-right: 85px;
+  padding-bottom: 40px;
+}
+select{
+  text-align: center;
+  font-family: "Jost","Arial",sans-serif;
+  font-size: 20px;
+  
+}
+.top_body_edit{
+  position: fixed;
+  display: flex;
+  bottom: 5%;
+  right: 5%;
+  align-items: right;
+  justify-content: right;  
+}
+.top_body_edit_pic{
+  height: 10%;
+  width: 10%;
+}
+.top_body_edit_pic:hover{
+  cursor: pointer;
+}
+
+
+/* Задний фон оверлея */
+.overlay{
+  position: fixed;
+  display: none; /*default*/
+  max-width: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 248, 239, 0.475);
+  z-index: 100;
+}
+
+/* рабочее окно оверлея */
+.overlayWindow{
+  margin-top: 100px;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: rgb(255, 248, 239);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 0.1px solid rgb(136,136,136);
+  border-radius: 10px;
+  box-shadow: 5px 5px 18px rgb(136,136,136);
+  height: 80%;
+}
+.overlayWindow p{
+  color: rgb(103, 0, 10);
+  font-size: 30px;
+  text-shadow: none;
+  margin-bottom: 5px;
+}
+.overlayWindow button{
+  font-family: "Jost","Arial",sans-serif;
+  font-size: 25px;
+  color: rgb(103, 0, 10);
+  border: 1px solid rgb(183, 162, 132);
+  background-color: white;
+  transition-duration: 0.4s;  
+  margin-bottom: 10px;  
+}
+.overlayWindow button:hover{
+  cursor: pointer;
+  background-color: rgb(183, 162, 132);
+  color: white;
+  border: 1px solid white;
+}
+
+/* кнопка закрытия оверлея */
+.close_button{
+  float: right;
+  font-size: 50px;
+  color: rgb(103, 0, 10);
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  margin-right: 30px;
+  margin-top: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 5px;
+  transition-duration: 0.4s;  
+}
+.close_button:hover{
+  background-color: rgb(183, 162, 132);
+  cursor:pointer;
+}
+
+.overlay_header{
+  height: 70px;
+  width: 100%;
+  border: none;
+  transition-duration: 0s;
+  border-bottom: 2px solid white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlay_header p{
+  text-align: center;
+  line-height: 100%;
+  margin: 0;
+  height: 50%;
+}
+/* выбор типов фильтра расписания*/
+.overlay_choice{
+ display: flex; 
+ width: 100%;
+}
+.overlay_choice button{
+  flex:1;
+  height: 70px;
+  border: none;
+  transition-duration: 0s;
+  border-bottom: 2px solid white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.overlay_choice button:hover{
+  cursor: pointer;
+  background-color: white;
+  color: rgb(103, 0, 10);
+  border-bottom: 2px solid rgb(103, 0, 10) !important;
+}
+
+/* Поиск фильтров*/
+.search_bar{
+  height: 36px;
+  font-size: 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(204, 204, 204);
+  border-radius: 2px;
+  box-shadow: rgb(238, 238, 238) 0px 1px 2px 0px inset;
+  padding-left: 10px;
+  width: 75%;
+  font-family: "Jost","Arial",sans-serif;
+}
+
+.overlay_control{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+}
+
+#edit_search_bar{
+  width: 100%;
+}
+.add_button{
+  height: 40px;
+  width: 40px;
+  margin-bottom: 0px !important;
+  font-family: "Jost","Arial",sans-serif;
+  line-height: 25px;
+}
+
+/* Фильтры */
+.list{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 10px;
+}
+.list li{
+  font-family: "Jost","Arial",sans-serif;
+  font-size: 25px;
+  color: #67000a;
+  border: 1px solid rgb(183, 162, 132);
+  background-color: white;
+  transition-duration: 0.4s;  
+  margin-bottom: 10px;  
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  list-style-type: none;
+  height: fit-content;
+}
+.list li:hover{
+  cursor: pointer;
+  background-color: rgb(183, 162, 132);
+  color: white;
+  border: 1px solid white;
+}
+
+#edit_list{
+  flex-direction: column;
+  width: 100%;
+  overflow: scroll;
+  display: block;
+  margin-top: 29px;
+  padding-top: 0px;
+}
+.active_tab{
+  border-bottom: 2px solid rgb(103, 0, 10) !important;
+}
+.inactive_tab{
+  border-bottom: 2px solid white !important;
+}
+
+.edit_table{
+  padding-top: 0px;
+  padding-bottom: 20px;
+  font-family: "Jost","Arial",sans-serif;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+  box-sizing: border-box;
+}
+
+.edit_table th,
+td {
+  width: 10%;
+  overflow: hidden;
+}
+.edit_table thead{
+  font-size: 25px;
+  color: rgb(103, 0, 10);
+}
+.edit_table tbody{
+  font-size: 20px;
+}
+#element_edit_window{
+  display: block; 
+}
+#element_edit_window div{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.table_control_icon{
+  width: 30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.table_control_icon:hover{
+  cursor: pointer;
+}
+
+.editable_textbox{
+  border: 1px solid rgb(103, 0, 10);
+  border-radius: ad;
+  outline: 0px solid transparent;
+}
+.error{
+  border: 2px solid red;
+}
+.error_message{
+  font-family: "Jost","Arial",sans-serif;
+  font-size: 20px;
+  color: red;
+  display: none;
+  margin-left: 20px;
+}
+#login_error{
+  font-family: "Jost","Arial",sans-serif;
+  font-size: 20px;
+  color: red;
+  display: none;
+
+}
+
+.edit_element_button{
+  margin-top: 20px;
+  height: 50%;
+}
+.edit_element_button:hover{
+  cursor: pointer;
+  
+}
+
+.edit_icon{
+  display: inline;
+}
+.delete_icon{
+  display: inline;
+}
+.accept_icon{
+  display: none;
+}
+.cancel_icon{
+  display: none;
+}
+.inactive_icon{
+  opacity: 50%;
+}
+.inactive_icon:hover{
+  cursor:not-allowed;
+}
+
+/* Основной контент */
+#mid_body{
+  display: inline-flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 10%;
+}
+.week_day{
+  flex: 1;
+  display: grid;
+}
+.week_day_name{
+  font-size: 30px;
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+.week_day_date{
+  display: inline;
+}
+
+.classes{
+  background-color: rgba(255, 248, 239, 0.7);
+}
+.inner_class{
+  flex-direction: row;
+  display: flex;
+  border: 1px solid rgb(205,205,205);
+  height: 80px;
+  margin: 0;
+}
+.classes p{
+  color: rgb(103, 0, 10);
+  text-shadow: none;
+}
+.class_time{
+  font-size: 15px;
+  text-align: center;
+  width: 60px;
+}
+.class_start{
+  margin-bottom:5px;
+}
+.class_end{
+  margin-top:0px;
+}
+.class_name_type{
+  flex:2;
+}
+.class_type{
+  margin-bottom: 1px;
+  font-size: 15px;
+}
+.class_name{
+  margin-top: 1px;
+  font-size: 20px;
+}
+
+.class_info{
+  flex:1;
+  font-size: 20px;
+  height: 85%;
+  margin-top: 15px;
+}
+.teacher{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.location{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 15px;
+  display: inline;
+}
+.login-form {
+  width: 300px;
+  margin: 0 auto;
+  font-family: "Jost","Arial",sans-serif;;
+}
+.login-form h1 {
+  text-align: center;
+  color: rgb(103, 0, 10);
+  font-size: 24px;
+  padding: 20px 0 20px 0;
+}
+.login-form input[type="password"],
+.login-form input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #dddddd;
+  margin-bottom: 15px;
+  box-sizing:border-box;
+}
+.login-form input[type="button"] {
+  width: 100%;
+  padding: 15px;
+  background-color: rgb(103, 0, 10);
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+} 

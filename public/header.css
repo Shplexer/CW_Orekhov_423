@@ -1,0 +1,74 @@
+/* Кнопка открытия оверлея с выбором фильтров */
+.stylyized_button{
+  font-family: "Jost","Arial",sans-serif;
+  font-size: 25px;
+  color: rgb(103, 0, 10);
+  border: 1px solid rgb(183, 162, 132);
+  background-color: white;
+  transition-duration: 0.4s;
+  margin-bottom: 10px;
+  display: inline;
+}
+.stylyized_button:hover{
+  cursor: pointer;
+  background-color: rgb(183, 162, 132);
+  color: white;
+  border: 1px solid white;
+}
+
+.week_swap_button{
+
+  margin-bottom: 0;
+  margin-right: 10px;
+  margin-left: 10px;
+  text-align: center;
+  line-height: 100%;
+}
+.edit_button{
+  display: none;
+}
+
+/*Заглавная часть */
+#top_body{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 0.2px solid white;
+
+}
+#top_body div{
+  flex: 1;
+
+}
+.top_body_time{
+  font-size: 25px;
+  text-align: center;
+}
+.top_body_pic{
+  flex: 1;
+  min-width: 0;
+}
+.uni_logo{
+  width: 400px;
+}
+#top_body_text{
+  flex: 1;
+  font-size: 50px;
+  text-align: center;
+  margin: 0px;
+}
+#date{
+  margin-bottom: 1px;
+  margin-top: 0px;
+}
+#week_num{
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+#week_block{
+  flex:1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
